@@ -5,6 +5,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <arpa/inet.h>
+#include <unistd.h>
 #define SIZE 4
 int main()
 {
