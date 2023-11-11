@@ -6,7 +6,7 @@ struct node
 } rt[10];
 void main()
 {
-    int graph[50][50], n,count;
+    int graph[50][50], n, count;
     printf("enter no.of vertices: ");
     scanf("%d", &n);
     printf("enter cost matrix:\n");
@@ -39,11 +39,13 @@ void main()
             }
         }
     } while (count != 0);
-    for(int i=0;i<n;i++){
-        printf("for router %d\n",i+1);
+    for (int i = 0; i < n; i++)
+    {
+        printf("for router %d\n", i + 1);
         printf("Node | via | distance\n");
-        for(int j=0;j<n;j++){
-            printf("%5d|%5d|%5d\n",j+1,rt[i].from[j]+1,rt[i].dist[j]);
+        for (int j = 0; j < n; j++)
+        {
+            printf("%5d|%5d|%5d\n", j + 1, rt[i].from[j] + 1, rt[i].dist[j]);
         }
         printf("\n\n");
     }
