@@ -1,46 +1,51 @@
 #include<stdio.h>
-
-int parent[50];
-
-void sunion(int p,int q){
-    parent[p] = q;
-}
-int find(int k){
-    if(parent[k] >0){
-        k = parent[k];
+#include<stdbool.h>
+#include<limits.h>
+int V=3;
+int minDistance(int dist[],bool visited[]){
+    int minVertex = 0;
+    for(int i=1;i<V;i++){
+        if(dist[i] < dist[minVertex] && !visited[i]){
+            minVertex = i;
+        }
     }
-    return k;
+    return minVertex;
 }
-void main(){
-    int graph[50][50]={{5,4,7,8,9,2},{4,4,5,1,2,4},{0,3,2,4,5,2},{3,5,4,2,2,1},{7,4,5,1,4,5},{2,0,1,4,3,3}};
-    int n = 6,min,u,v,p,q,mst[50][2],cost = 0;
+void dijkstra(int graph[V][V],int source){
+    int dist[V],i;
+    bool visited[V];
 
-    for(int i=0;i<n;i++){
-        min = 99;
-        for(int j=0;j<n;j++){
-            if(graph[i][j] != 99){
-                if(min>graph[i][j]){
-                    min = graph[i][j];
-                    u = i;
-                    v = j;
-                }   
+    for(i=0;i<V;i++){
+        dist[i] = INT_MAX;
+        visited[i] = false;
+    }
+    dist[source] = 0;
+
+    for(i=0;i<V-1;i++){
+        int u = minDistance(dist,visited);
+        visited[u] = true;
+
+        for(int v =0;v<V;v++){
+            if(!visited[v] && graph[u][v] && dist[u] != INT_MAX && dist[u] + graph[u][v] < dist[v]){
+                dist[v] = dist[u] + graph[u][v];
             }
         }
-        p = find(u);
-        q = find(v);
-        if(p != q){
-            mst[i][0] = u;
-            mst[i][1] = v;
-            cost = cost+graph[u][v];
-            sunion(p,q);
-        }
-        else{
-            mst[i][0] = -1;
-            mst[i][1] = -1;
+    }
+    printf("vertex | distance from src\n");
+    for(int i=0;i<V;i++){
+        printf("%d      | %d\n",i,dist[i]);
+    }
+}
+void main(){
+    int graph[50][50],source;
+    printf("enter no.of Vertices: ");
+    scanf("%d",&V);
+    for(int i=0;i<V;i++){
+        for(int j=0;j<V;j++){
+            scanf("%d",&graph[i][j]);
         }
     }
-    for(int i=0;i<n;i++){
-        if(mst[i][0] != -1 && mst[i][1] != -1)
-        printf("%c %c %d\n",mst[i][0]+65,mst[i][1]+65,graph[mst[i][0]][mst[i][1]]);
-    }
+    printf("enter source: ");
+    scanf("%d",&source);
+    dijkstra(graph,source);
 }
