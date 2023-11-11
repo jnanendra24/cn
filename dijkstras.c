@@ -1,7 +1,7 @@
 #include<stdio.h>
 #include<stdbool.h>
 #include<limits.h>
-int V=3;
+int V;
 int minDistance(int dist[],bool visited[]){
     int minVertex = 0;
     for(int i=1;i<V;i++){
